@@ -4,6 +4,8 @@ class Weather {
   final String descricao;
   final int humidade;
   final double velocidadeVento;
+  final double latitude;
+  final double longitude;
 
   Weather({
     required this.cidade,
@@ -11,6 +13,8 @@ class Weather {
     required this.descricao,
     required this.humidade,
     required this.velocidadeVento,
+    required this.latitude,
+    required this.longitude,
   });
 
   factory Weather.fromJson(Map<String, dynamic> json) {
@@ -20,6 +24,8 @@ class Weather {
       descricao: json['weather'][0]['description'],
       humidade: json['main']['humidity'],
       velocidadeVento: json['wind']['speed'].toDouble(),
+      latitude: double.parse(json['coord']['lat'].toStringAsFixed(2)),
+      longitude: double.parse(json['coord']['lon'].toStringAsFixed(2)),
     );
   }
 }

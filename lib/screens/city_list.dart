@@ -1,24 +1,13 @@
 import 'package:flutter/material.dart';
-import '../services/weather_service.dart';
-import '../models/weather.dart';
+import 'package:provider/provider.dart';
+import '../providers/city_provider.dart';
 import '../widgets/weather_tile.dart';
 
-class CityListScreen extends StatefulWidget {
-  @override
-  _CityListScreenState createState() => _CityListScreenState();
-}
-
-class _CityListScreenState extends State<CityListScreen> {
-  List<String> cities = [];
-
-  void _addCity(String city) {
-    setState(() {
-      cities.add(city);
-    });
-  }
-
+class CityListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final cityProvider = Provider.of<CityProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('App Tempo'),
@@ -28,20 +17,9 @@ class _CityListScreenState extends State<CityListScreen> {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: cities.length,
+              itemCount: cityProvider.cities.length,
               itemBuilder: (context, index) {
-                return FutureBuilder<Weather>(
-                  future: fetchWeather(cities[index]),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else {
-                      return WeatherTile(weather: snapshot.data!);
-                    }
-                  },
-                );
+                return WeatherTile(weather: cityProvider.cities[index]);
               },
             ),
           ),
@@ -57,7 +35,7 @@ class _CityListScreenState extends State<CityListScreen> {
                 onPressed: () async {
                   final newCity = await Navigator.pushNamed(context, '/addCity');
                   if (newCity != null) {
-                    _addCity(newCity as String);
+                    cityProvider.addCity(newCity as String);
                   }
                 },
                 child: Text('Adicionar Cidade'),
@@ -65,6 +43,18 @@ class _CityListScreenState extends State<CityListScreen> {
             ),
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            ListTile(
+              title: Text('Mapa'),
+              onTap: () {
+                Navigator.pushNamed(context, '/mapScreen');
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 
-class AddCityForm extends StatelessWidget {
+class AddCityForm extends StatefulWidget {
+  @override
+  _AddCityFormState createState() => _AddCityFormState();
+}
+
+class _AddCityFormState extends State<AddCityForm> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _cityController = TextEditingController();
+  final _cityController = TextEditingController();
+
+  @override
+  void dispose() {
+    _cityController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +26,14 @@ class AddCityForm extends StatelessWidget {
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
                 controller: _cityController,
-                decoration: InputDecoration(labelText: 'Cidade'),
+                decoration: InputDecoration(labelText: 'Nome da Cidade'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Por favor, insira uma cidade';
+                    return 'Por favor, insira o nome da cidade';
                   }
                   return null;
                 },
@@ -34,12 +46,6 @@ class AddCityForm extends StatelessWidget {
                   }
                 },
                 child: Text('Adicionar'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                  textStyle: TextStyle(fontSize: 18),
-                ),
               ),
             ],
           ),
