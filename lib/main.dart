@@ -5,6 +5,7 @@ import 'screens/city_form.dart';
 import 'screens/weather_details.dart';
 import 'providers/city_provider.dart';
 import 'models/weather.dart';
+import 'utils/fade_page_route.dart';
 
 void main() {
   runApp(WeatherApp());
@@ -18,7 +19,13 @@ class WeatherApp extends StatelessWidget {
       child: MaterialApp(
         title: 'App Tempo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primaryColor: Colors.blue[700],
+          colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.blueAccent),
+          fontFamily: 'Raleway',
+          textTheme: TextTheme(
+            headlineLarge: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
+            bodyLarge: TextStyle(fontSize: 18.0),
+          ),
         ),
         home: CityListScreen(),
         routes: {
@@ -27,10 +34,8 @@ class WeatherApp extends StatelessWidget {
         onGenerateRoute: (settings) {
           if (settings.name == '/weatherDetails') {
             final Weather weather = settings.arguments as Weather;
-            return MaterialPageRoute(
-              builder: (context) {
-                return WeatherDetailsScreen(weather: weather);
-              },
+            return FadePageRoute(
+              page: WeatherDetailsScreen(weather: weather),
             );
           }
           return null;

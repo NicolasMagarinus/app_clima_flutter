@@ -10,7 +10,7 @@ class CityListScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('App Tempo'),
+        title: Text('App Tempo', style: Theme.of(context).textTheme.titleLarge),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

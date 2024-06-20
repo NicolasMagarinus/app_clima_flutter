@@ -13,7 +13,7 @@ class WeatherTile extends StatelessWidget {
     final cityProvider = Provider.of<CityProvider>(context, listen: false);
 
     return ListTile(
-      title: Text(weather.cidade),
+      title: Text(weather.cidade, style: Theme.of(context).textTheme.bodyLarge),
       subtitle: Text('${weather.temperatura}°C, ${weather.descricao}'),
       onTap: () {
         Navigator.pushNamed(
