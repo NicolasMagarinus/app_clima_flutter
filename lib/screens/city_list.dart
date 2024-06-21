@@ -50,7 +50,7 @@ class CityListScreen extends StatelessWidget {
             ListTile(
               title: Text('Mapa'),
               onTap: () {
-                Navigator.pushNamed(context, '/mapScreen');
+                Navigator.pushNamed(context, 'MapScreen');
               },
             ),
           ],
